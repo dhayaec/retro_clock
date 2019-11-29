@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:analog_clock/widgets/TrianglePainter.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -134,7 +135,6 @@ class _AnalogClockState extends State<AnalogClock> {
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey[600]
         ),
         child: Stack(
           children: [
@@ -145,11 +145,54 @@ class _AnalogClockState extends State<AnalogClock> {
               size: 0.9,
               angleRadians: _now.second * radiansPerTick,
             ),
-            DrawnHand(
-              color: Colors.orange,
-              thickness: 4,
-              size: 0.8,
+
+            ContainerHand(
+              color: Colors.transparent,
+              size: 0.1,
               angleRadians: _now.minute * radiansPerTick,
+              child: Transform.translate(
+                offset: Offset(0.0, -90.0),
+                child: Container(
+                  width: 16,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            ),
+            // Example of a hand drawn with [Container].
+            ContainerHand(
+              color: Colors.transparent,
+              size: 0.5,
+              angleRadians: _now.minute * radiansPerTick,
+              child: Transform.translate(
+                offset: Offset(0.0, -160.0),
+                child: Container(
+                  width: 10,
+                  height: 260,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ),
+            ContainerHand(
+              color: Colors.transparent,
+              size: 0.1,
+              angleRadians: _now.hour * radiansPerHour +
+                  (_now.minute / 60) * radiansPerHour,
+              child: Transform.translate(
+                offset: Offset(0.0, -90.0),
+                child: Container(
+                  width: 16,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                  ),
+                ),
+              ),
             ),
             // Example of a hand drawn with [Container].
             ContainerHand(
@@ -158,12 +201,35 @@ class _AnalogClockState extends State<AnalogClock> {
               angleRadians: _now.hour * radiansPerHour +
                   (_now.minute / 60) * radiansPerHour,
               child: Transform.translate(
-                offset: Offset(0.0, -60.0),
+                offset: Offset(0.0, -100.0),
                 child: Container(
                   width: 16,
                   height: 150,
                   decoration: BoxDecoration(
-                    color: customTheme.primaryColor,
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ),
+
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black,
+                ),
+                child: Center(
+                  child: Container(
+                    width: 4,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
